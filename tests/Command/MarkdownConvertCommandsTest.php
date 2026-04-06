@@ -47,6 +47,7 @@ final class MarkdownConvertCommandsTest extends TestCase
         $this->assertTrue($definition->hasArgument('directory'));
         $this->assertTrue($definition->hasArgument('chunk-size'));
         $this->assertSame('4000', $definition->getArgument('chunk-size')->getDefault());
+        $this->assertTrue($definition->hasOption('text'));
     }
 
     /**
@@ -213,6 +214,102 @@ final class MarkdownConvertCommandsTest extends TestCase
 
         $this->assertSame(Command::FAILURE, $exitCode);
         $this->assertStringContainsString('Утилита kreuzberg не найдена', $tester->getDisplay());
+    }
+
+    /**
+     * Проверяет, что при source=.md файл конвертация через kreuzberg не требуется.
+     */
+    public function testConvertToMarkdownChunksReadsMarkdownFileWithoutKreuzberg(): void
+    {
+        $baseDir = $this->createTempDir();
+        $sourcePath = $baseDir . '/sample.md';
+        file_put_contents($sourcePath, "# Title\n\nParagraph.\n");
+
+        $command = new TestableConvertToMarkdownChunksCommand();
+        $command->setKreuzbergAvailable(false);
+        $tester = new CommandTester($command);
+        $exitCode = $tester->execute([
+            'source' => $sourcePath,
+            'chunk-size' => '50',
+        ]);
+
+        $this->assertSame(Command::SUCCESS, $exitCode);
+        $this->assertTrue(file_exists($baseDir . '/sample_chunck/1.md'));
+    }
+
+    /**
+     * Проверяет, что режим --text чанкует переданный markdown без kreuzberg.
+     */
+    public function testConvertToMarkdownChunksChunksTextModeWithoutKreuzberg(): void
+    {
+        $baseDir = $this->createTempDir();
+        $targetDirectory = $baseDir . '/chunks_text';
+
+        $command = new TestableConvertToMarkdownChunksCommand();
+        $command->setKreuzbergAvailable(false);
+        $tester = new CommandTester($command);
+        $exitCode = $tester->execute([
+            'source' => "# H1\n\nSome text that should be chunked.\n",
+            'directory' => $targetDirectory,
+            'chunk-size' => '20',
+            '--text' => true,
+        ]);
+
+        $this->assertSame(Command::SUCCESS, $exitCode);
+        $this->assertTrue(file_exists($targetDirectory . '/1.md'));
+    }
+
+    /**
+     * Проверяет ошибку, если --text указан без directory.
+     */
+    public function testConvertToMarkdownChunksFailsForTextModeWithoutDirectory(): void
+    {
+        $command = new TestableConvertToMarkdownChunksCommand();
+        $tester = new CommandTester($command);
+        $exitCode = $tester->execute([
+            'source' => "Text\n",
+            '--text' => true,
+        ]);
+
+        $this->assertSame(Command::FAILURE, $exitCode);
+        $this->assertStringContainsString('Для режима --text требуется указать директорию', $tester->getDisplay());
+    }
+
+    /**
+     * Проверяет, что STDIN-режим (без source) чанкует markdown без kreuzberg.
+     */
+    public function testConvertToMarkdownChunksChunksStdinWithoutKreuzberg(): void
+    {
+        $baseDir = $this->createTempDir();
+        $targetDirectory = $baseDir . '/chunks_stdin';
+
+        $command = new TestableConvertToMarkdownChunksCommand();
+        $command->setKreuzbergAvailable(false);
+        $command->setStdinMarkdown("# Title\n\nA long paragraph that should be chunked.\n");
+        $tester = new CommandTester($command);
+        $exitCode = $tester->execute([
+            'directory' => $targetDirectory,
+            'chunk-size' => '20',
+        ]);
+
+        $this->assertSame(Command::SUCCESS, $exitCode);
+        $this->assertTrue(file_exists($targetDirectory . '/1.md'));
+    }
+
+    /**
+     * Проверяет ошибку, если STDIN-режим запущен без directory.
+     */
+    public function testConvertToMarkdownChunksFailsForStdinModeWithoutDirectory(): void
+    {
+        $command = new TestableConvertToMarkdownChunksCommand();
+        $command->setStdinMarkdown("Text\n");
+        $tester = new CommandTester($command);
+        $exitCode = $tester->execute([
+            'chunk-size' => '20',
+        ]);
+
+        $this->assertSame(Command::FAILURE, $exitCode);
+        $this->assertStringContainsString('При чтении из STDIN требуется указать директорию', $tester->getDisplay());
     }
 
     /**

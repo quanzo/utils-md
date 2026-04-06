@@ -13,6 +13,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 final class TestableConvertToMarkdownChunksCommand extends ConvertToMarkdownChunksCommand
 {
     private bool $kreuzbergAvailable = true;
+    private string $stdinMarkdown = '';
 
     /**
      * Устанавливает состояние доступности kreuzberg для теста.
@@ -24,6 +25,19 @@ final class TestableConvertToMarkdownChunksCommand extends ConvertToMarkdownChun
     public function setKreuzbergAvailable(bool $isAvailable): self
     {
         $this->kreuzbergAvailable = $isAvailable;
+        return $this;
+    }
+
+    /**
+     * Устанавливает содержимое, которое будет возвращаться как STDIN.
+     *
+     * @param string $markdown Markdown-текст.
+     *
+     * @return $this
+     */
+    public function setStdinMarkdown(string $markdown): self
+    {
+        $this->stdinMarkdown = $markdown;
         return $this;
     }
 
@@ -57,5 +71,15 @@ final class TestableConvertToMarkdownChunksCommand extends ConvertToMarkdownChun
     protected function extractNormalizedMarkdown(string $sourcePath, OutputInterface $output): ?string
     {
         return 'Первое длинное предложение для разбиения. Второе длинное предложение для разбиения.';
+    }
+
+    /**
+     * Возвращает предопределённый markdown вместо чтения реального STDIN.
+     *
+     * @return string
+     */
+    protected function readMarkdownFromStdin(): string
+    {
+        return $this->stdinMarkdown;
     }
 }

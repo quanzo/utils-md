@@ -40,9 +40,13 @@
 
 Аргументы:
 
-- `source` (обязательно) — путь к исходному `docx/xlsx` файлу;
+- `source` (опционально) — путь к исходному `docx/xlsx` или `.md` файлу. При использовании `--text` воспринимается как markdown-текст. Если не указан, markdown читается из STDIN;
 - `directory` (опционально) — целевая директория для chunk-файлов;
 - `chunk-size` (опционально, по умолчанию `4000`) — размер чанка в символах.
+
+Опции:
+
+- `--text` — интерпретировать `source` как markdown-текст (без конвертации через `kreuzberg`).
 
 Поведение:
 
@@ -50,9 +54,14 @@
 - для разбивки применяет `MarkdownChunckHelper::chunkBySemanticBlocks($markdown, $chunkSize)`;
 - если `directory` не задан, создаётся директория рядом с исходным файлом: `<имя_файла>_chunck`;
 - чанки сохраняются как `1.md`, `2.md`, `3.md` и т.д.
+- для `--text` и STDIN-режима требуется явно указать `directory`, т.к. нет исходного файла для расчёта дефолтной директории.
 
 Примеры:
 
 - `php bin/console convert:markdown-chunks ./docs/report.docx`
 - `php bin/console convert:markdown-chunks ./docs/report.xlsx ./chunks 3500`
+- `.md` файл: `php bin/console convert:markdown-chunks ./docs/report.md`
+- STDIN (Linux redirect): `php bin/console convert:markdown-chunks ./chunks < ./docs/report.md`
+- STDIN (pipe): `cat ./docs/report.md | php bin/console convert:markdown-chunks ./chunks`
+- `--text`: `php bin/console convert:markdown-chunks --text \"# Title\n\nText\" ./chunks`
 

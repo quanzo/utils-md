@@ -1,0 +1,10 @@
+parameters:
+    level: 1
+    tmpDir: temp
+    bootstrapFiles:
+        - vendor/autoload.php
+    paths:
+        - src
+    excludePaths:
+        - */vendor/*
+    treatPhpDocTypesAsCertain: false

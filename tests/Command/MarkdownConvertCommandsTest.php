@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Command;
 
-use app\modules\neuron\classes\command\ConvertToMarkdownChunksCommand;
-use app\modules\neuron\classes\command\ConvertToMarkdownCommand;
+use app\utilsmd\classes\command\ConvertToMarkdownChunksCommand;
+use app\utilsmd\classes\command\ConvertToMarkdownCommand;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
@@ -319,7 +319,7 @@ final class MarkdownConvertCommandsTest extends TestCase
      */
     private function createTempDir(): string
     {
-        $directory = sprintf('%s/neuronapp_test_%s', sys_get_temp_dir(), uniqid());
+        $directory = sprintf('%s/utilsmd_test_%s', sys_get_temp_dir(), uniqid());
         mkdir($directory, 0775, true);
         return $directory;
     }

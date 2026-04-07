@@ -1,6 +1,6 @@
 <?php
 
-$pharFile = 'neuronapp.phar';
+$pharFile = 'utilsmd.phar';
 
 if (file_exists($pharFile)) {
     unlink($pharFile);

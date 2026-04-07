@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace app\modules\neuron\classes\dto\tools;
+namespace app\utilsmd\classes\dto\tools;
 
-use app\modules\neuron\interfaces\IArrayable;
+use app\utilsmd\interfaces\IArrayable;
 
 /**
  * DTO одного семантического markdown-чанка.

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace app\modules\neuron\helpers;
+namespace app\utilsmd\helpers;
 
-use app\modules\neuron\classes\dto\tools\MarkdownChunkDto;
-use app\modules\neuron\classes\dto\tools\MarkdownChunksResultDto;
+use app\utilsmd\classes\dto\tools\MarkdownChunkDto;
+use app\utilsmd\classes\dto\tools\MarkdownChunksResultDto;
 use InvalidArgumentException;
 
 use function array_values;

@@ -1,6 +1,6 @@
 {
-    "name": "quanzo/neuronapp",
-    "description": "neuronapp",
+    "name": "quanzo/utilsmd",
+    "description": "",
     "type": "project",
     "require": {
         "php": ">=8.1",
@@ -16,7 +16,7 @@
     },
     "autoload": {
         "psr-4": {
-            "app\\modules\\neuron\\": "src/"
+            "app\\utilsmd\\": "src/"
         }
     },
     "autoload-dev": {

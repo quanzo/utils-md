@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ruleset name="NeuronApp Coding Standard">
-    <description>Base PHPCS ruleset for NeuronApp project using PSR-12.</description>
+<ruleset name="UtilsMD Coding Standard">
+    <description>Base PHPCS ruleset for UtilsMD project using PSR-12.</description>
 
     <!-- Directories to scan -->
     <file>src</file>
@@ -33,4 +33,3 @@
     <arg name="tab-width" value="4"/>
     <arg name="basepath" value="."/>
 </ruleset>
-

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace app\modules\neuron\helpers;
+namespace app\utilsmd\helpers;
 
 use function implode;
 use function explode;

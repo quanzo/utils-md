@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace app\modules\neuron\interfaces;
+namespace app\utilsmd\interfaces;
 
 /**
  * Объект поддердивает преобразование в массив

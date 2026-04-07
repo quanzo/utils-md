@@ -2,9 +2,9 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use app\modules\neuron\classes\command\ConvertToMarkdownChunksCommand;
-use app\modules\neuron\classes\command\ConvertToMarkdownCommand;
-use app\modules\neuron\classes\console\TimedConsoleApplication;
+use app\utilsmd\classes\command\ConvertToMarkdownChunksCommand;
+use app\utilsmd\classes\command\ConvertToMarkdownCommand;
+use app\utilsmd\classes\console\TimedConsoleApplication;
 
 define('APP_ID', 'utils-md');
 

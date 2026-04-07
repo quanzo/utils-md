@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace app\modules\neuron\classes\command;
+namespace app\utilsmd\classes\command;
 
-use app\modules\neuron\helpers\MarkdownChunckHelper;
-use app\modules\neuron\helpers\MarkdownHelper;
+use app\utilsmd\helpers\MarkdownChunckHelper;
+use app\utilsmd\helpers\MarkdownHelper;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;

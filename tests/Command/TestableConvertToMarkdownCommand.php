@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Command;
 
-use app\modules\neuron\classes\command\ConvertToMarkdownCommand;
+use app\utilsmd\classes\command\ConvertToMarkdownCommand;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**

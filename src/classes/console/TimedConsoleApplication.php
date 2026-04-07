@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace app\modules\neuron\classes\console;
+namespace app\utilsmd\classes\console;
 
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Command\Command;
